@@ -6,9 +6,28 @@ class RDPController {
     this.server = server;
   }
 
+  init() {
+
+  }
+
+  onConnection(ws) {
+
+  }
+
+  onMessage(m) {
+
+  }
+
+  sendKey(k) {
+
+  }
+
+  sendMouseMove(x, y) {
+    
+  }
 }
 
 function CreateServer(server) {
-  const wss = new WebSocket.Server({ port: 8080 });
+  const wss = new WebSocket.Server({ server });
   return new RDPController(wss);
 }
