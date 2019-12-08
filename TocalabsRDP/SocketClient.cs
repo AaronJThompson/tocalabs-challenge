@@ -32,6 +32,7 @@ namespace TocalabsRDP
             this.Close();
             wsClient = new WebSocket(host);
             wsClient.Connect();
+            wsClient.Compression = CompressionMethod.Deflate;
             wsClient.OnMessage += this.onMessage;
             return wsClient;
         }
@@ -53,7 +54,7 @@ namespace TocalabsRDP
             if (wsClient != null && wsClient.IsAlive)
             {
                 MemoryStream ms = new MemoryStream();
-                img.Save(ms, ImageFormat.Bmp);
+                img.Save(ms, ImageFormat.Jpeg);
                 wsClient.SendAsync(ms.ToArray(), act);
                 ms.Dispose();
                 ms.Close();
