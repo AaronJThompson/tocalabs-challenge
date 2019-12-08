@@ -33,7 +33,11 @@ class RDPController {
   }
 
   sendMouseMove(x, y) {
-
+    this.sendToClients({
+      EventType: "mouse",
+      DeltaX: x,
+      DeltaY: y
+    })
   }
 }
 
