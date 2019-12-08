@@ -14,7 +14,13 @@ namespace TocalabsRDP
 
         public ScreenStreamer(string host)
         {
+            screenCapture = new ScreenCapture();
+            socket = new SocketClient(host);
+        }
 
+        public void StartStream()
+        {
+            
         }
     }
 }
