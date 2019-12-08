@@ -28,6 +28,7 @@ namespace TocalabsRDP
 
         public void StartStream()
         {
+            // This is a synchronous version (Not used in main application). It waits for screen capture and then sends synchronously upon completion
             socket = new SocketClient(host);
             running = true;
             while(running)
@@ -44,6 +45,7 @@ namespace TocalabsRDP
         {
             socket = new SocketClient(host);
             running = true;
+            // Capture our initial image to start the loop
             lastCapture = screenCapture.Capture();
             Action<bool> action = this.NextSend;
             socket.SendImageAsync(lastCapture, action);
@@ -54,6 +56,7 @@ namespace TocalabsRDP
             if (running)
             {
                 Action<bool> action = this.NextSend;
+                // Send the last image asynchronously and capture another whilst it sends 
                 socket.SendImageAsync(lastCapture, action);
                 lastCapture = screenCapture.Capture();
             }
@@ -70,6 +73,7 @@ namespace TocalabsRDP
             if(thread == null)
             {
                 Debug.WriteLine("Starting stream");
+                // Create a new thread for the screen capture and sending to start in
                 thread = new Thread(StartAsyncStream);
                 thread.Start();
                 return thread;
@@ -86,6 +90,7 @@ namespace TocalabsRDP
             if (thread != null)
             {
                 running = false;
+                // Join thread, with 0.5s timeout
                 if (thread.Join(500) == false)
                 {
                     thread.Abort();
