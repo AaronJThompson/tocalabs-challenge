@@ -14,14 +14,17 @@ namespace TocalabsRDP
     class SocketClient
     {
         private WebSocket wsClient;
+        private InputControl inputControl;
 
         public SocketClient(string host)
         {
             wsClient = this.Connect(host);
+            inputControl = new InputControl();
         }
 
         public SocketClient()
         {
+            inputControl = new InputControl();
         }
 
         public WebSocket Connect(string host)
@@ -53,7 +56,8 @@ namespace TocalabsRDP
 
         private void onMessage(object sender, WebSocketSharp.MessageEventArgs e)
         {
-
+            InputEvent ie = JsonConvert.DeserializeObject<InputEvent>(e.Data);
+            inputControl.RunEvent(ie);
         }
     }
 }
