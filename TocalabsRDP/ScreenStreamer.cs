@@ -18,7 +18,6 @@ namespace TocalabsRDP
         private string host;
         private Thread thread;
         private Bitmap lastCapture;
-        private bool screen_changed = true;
         private bool running = false;
 
         public ScreenStreamer(string host)
@@ -57,15 +56,10 @@ namespace TocalabsRDP
         {
             if (running)
             {
-                Bitmap temp_last = lastCapture;
                 Action<bool> action = this.NextSend;
-                if (screen_changed)
-                {
-                    // Send the last image asynchronously and capture another whilst it sends
-                    socket.SendImageAsync(lastCapture, action);
-                }
+                // Send the last image asynchronously and capture another whilst it sends
+                socket.SendImageAsync(lastCapture, action);
                 lastCapture = screenCapture.Capture();
-
             }
             else
             {
@@ -82,13 +76,13 @@ namespace TocalabsRDP
 
             using (var ms = new MemoryStream())
             {
-                imgA.Save(ms, imgA.RawFormat);
+                imgA.Save(ms, ImageFormat.Bmp);
                 imgA_bytes = ms.ToArray();
             }
 
             using (var ms = new MemoryStream())
             {
-                imgB.Save(ms, imgB.RawFormat);
+                imgB.Save(ms, ImageFormat.Bmp);
                 imgB_bytes = ms.ToArray();
             }
 

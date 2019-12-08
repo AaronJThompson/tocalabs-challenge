@@ -13,8 +13,10 @@ class RDPController {
     this.server.on('connection', this.onConnection.bind(this));
     setInterval(this.outputFPS.bind(this), 1000);
     setInterval(() => {
-      console.log("Saving last capture...");
-      fs.writeFileSync(__dirname + "../../../last_capture.jpg", this.lastImage);
+      if (this.frames > 0) {
+        console.log("Saving last capture...");
+        fs.writeFileSync(__dirname + "../../../last_capture.jpg", this.lastImage);
+      }
     }, 5000)
   }
 
