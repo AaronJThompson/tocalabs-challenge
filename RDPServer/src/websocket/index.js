@@ -13,8 +13,10 @@ class RDPController {
   }
 
   outputFPS() {
-    console.log("FPS:", this.frames);
-    this.frames = 0;
+    if (this.frames > 0) {
+      console.log("FPS:", this.frames);
+      this.frames = 0;
+    }
   }
 
   onConnection(ws) {
