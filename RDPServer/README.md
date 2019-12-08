@@ -5,7 +5,7 @@ Created using Node.JS, Express and Websockets
 
 ## Install and run
 
-Install: `npm install`
+Install: `npm install`  
 Run: `npm start`
 
 ## Endpoints
@@ -14,19 +14,18 @@ POST: `/input/mouse_move`
 <br />
 Body:
 <br />
-```
+```json
 {
   "x": int, (Amount to move mouse along x-axis)
   "y": int (Amount to move mouse along y-axis)
-}
-``` 
+} 
+```
 
-<br />
 POST: `/input/key`
 <br />
 Body:
 <br />
-```
+```json
 {
   "keycode": int (Keycode to press)
 }
