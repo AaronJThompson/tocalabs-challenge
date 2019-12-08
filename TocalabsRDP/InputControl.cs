@@ -19,7 +19,7 @@ namespace TocalabsRDP
 
         public void RunEvent(InputEvent ie)
         {
-            if(ie.Type == InputType.Key)
+            if (ie.Type == InputType.Key)
             {
                 input.Keyboard.KeyPress((VirtualKeyCode)ie.KeyCode);
             }
