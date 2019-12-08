@@ -7,6 +7,7 @@ using System.Threading;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Diagnostics;
+using System.IO;
 
 namespace TocalabsRDP
 {
@@ -17,6 +18,7 @@ namespace TocalabsRDP
         private string host;
         private Thread thread;
         private Bitmap lastCapture;
+        private bool screen_changed = true;
         private bool running = false;
 
         public ScreenStreamer(string host)
@@ -55,10 +57,15 @@ namespace TocalabsRDP
         {
             if (running)
             {
+                Bitmap temp_last = lastCapture;
                 Action<bool> action = this.NextSend;
-                // Send the last image asynchronously and capture another whilst it sends 
-                socket.SendImageAsync(lastCapture, action);
+                if (screen_changed)
+                {
+                    // Send the last image asynchronously and capture another whilst it sends
+                    socket.SendImageAsync(lastCapture, action);
+                }
                 lastCapture = screenCapture.Capture();
+
             }
             else
             {
@@ -66,6 +73,29 @@ namespace TocalabsRDP
                 socket = null;
                 Debug.WriteLine("Closing stream thread gracefully");
             }
+        }
+
+        private bool CompareBitmaps(Bitmap imgA, Bitmap imgB)
+        {
+            byte[] imgA_bytes;
+            byte[] imgB_bytes;
+
+            using (var ms = new MemoryStream())
+            {
+                imgA.Save(ms, imgA.RawFormat);
+                imgA_bytes = ms.ToArray();
+            }
+
+            using (var ms = new MemoryStream())
+            {
+                imgB.Save(ms, imgB.RawFormat);
+                imgB_bytes = ms.ToArray();
+            }
+
+            String imgA64 = Convert.ToBase64String(imgA_bytes);
+            String imgB64 = Convert.ToBase64String(imgB_bytes);
+
+            return string.Equals(imgA64, imgB64);
         }
 
         public Thread Toggle()
