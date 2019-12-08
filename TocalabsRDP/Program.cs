@@ -13,6 +13,7 @@ namespace TocalabsRDP
         /// </summary>
         static void Main(string[] args)
         {
+            // Hardcode the server adress for now.
             ScreenStreamer streamer = new ScreenStreamer("ws://localhost:8080");
             streamer.Toggle();
             var endlessTask = new TaskCompletionSource<bool>().Task;
