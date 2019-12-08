@@ -9,33 +9,28 @@ namespace TocalabsRDP
     enum InputType { Mouse, Key };
     class InputEvent
     {
-        public string Type { get; set; }
+        public string EventType { get; set; }
 
-        private InputType inputType;
+        public InputType Type;
         public int KeyCode { get; set; }
 
-        public int PosX { get; set; }
+        public int DeltaX { get; set; }
 
-        public int PosY { get; set; }
+        public int DeltaY { get; set; }
 
-        public void Run()
+        public InputEvent()
         {
-            switch (Type)
+            switch (EventType)
             {
                 case "mouse":
-                    inputType = InputType.Mouse;
+                    Type = InputType.Mouse;
                     break;
                 case "key":
-                    inputType = InputType.Key;
+                    Type = InputType.Key;
                     break;
                 default:
-                    inputType = InputType.Key;
+                    Type = InputType.Key;
                     break;
-            }
-
-            if(inputType == InputType.Key)
-            {
-
             }
         }
     }
