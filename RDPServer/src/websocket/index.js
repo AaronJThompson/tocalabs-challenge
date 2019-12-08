@@ -41,12 +41,12 @@ class RDPController {
   }
 }
 
-function CreateServer(server) {
+function CreateWSServer(server) {
   const wss = new WebSocket.Server({ server });
   return new RDPController(wss);
 }
 
 module.exports = {
   RDPController,
-  CreateServer
+  CreateWSServer
 }

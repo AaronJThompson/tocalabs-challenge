@@ -1,15 +1,16 @@
-const WebSocket = require('ws');
+const express = require('express');
+const http = require('http');
+const inputRouter = require('./routes/input');
+const {CreateWSServer, RDPController } = require('./websocket');
 
-const wss = new WebSocket.Server({ port: 8080 });
+const app = express();
 
-wss.on('connection', function connection(ws) {
-  console.log("New connection");
-  ws.on('message', function incoming(message) {
-    console.log(message);
-  });
-  ws.send(JSON.stringify({
-    EventType: "mouse",
-    DeltaX: 100,
-    DeltaY: 0
-  }));
-});
+app.use('/input', inputRouter);
+
+const server = http.createServer(app);
+
+rdpController = CreateWSServer(server);
+
+server.listen(process.env.PORT || 8080, () => {
+  console.log(`Server started on port ${server.address().port}`);
+})
