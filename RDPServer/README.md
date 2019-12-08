@@ -19,7 +19,8 @@ Body:
   "x": int, (Amount to move mouse along x-axis)
   "y": int (Amount to move mouse along y-axis)
 }
-```
+``` 
+
 <br />
 POST: `/input/key`
 <br />
