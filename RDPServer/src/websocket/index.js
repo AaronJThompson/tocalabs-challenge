@@ -4,10 +4,17 @@ class RDPController {
   constructor(server) {
     this.server = server;
     this.init();
+    this.frames = 0;
   }
 
   init() {
     this.server.on('connection', this.onConnection.bind(this));
+    setInterval(this.outputFPS.bind(this), 1000);
+  }
+
+  outputFPS() {
+    console.log("FPS:", this.frames);
+    this.frames = 0;
   }
 
   onConnection(ws) {
@@ -15,7 +22,7 @@ class RDPController {
   }
 
   onMessage(m) {
-    console.log(m);
+    this.frames += 1;
   }
 
   sendKey(k) {
