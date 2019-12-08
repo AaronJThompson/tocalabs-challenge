@@ -3,6 +3,7 @@ const WebSocket = require('ws');
 class RDPController {
   constructor(server) {
     this.server = server;
+    this.init();
   }
 
   init() {
