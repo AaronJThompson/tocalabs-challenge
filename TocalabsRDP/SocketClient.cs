@@ -39,6 +39,7 @@ namespace TocalabsRDP
                 MemoryStream ms = new MemoryStream();
                 img.Save(ms, ImageFormat.Bmp);
                 wsClient.Send(ms.ToArray());
+                ms.Dispose();
                 ms.Close();
             }
         }

@@ -19,12 +19,12 @@ namespace TocalabsRDP
         public Form1()
         {
             InitializeComponent();
-            streamer = new ScreenStreamer("ws://localhost");
+            streamer = new ScreenStreamer("ws://localhost:8080");
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            if(streamerThread != null)
+            if(streamerThread == null)
             {
                 streamerThread = new Thread(new ThreadStart(streamer.StartStream));
                 streamerThread.Start();
