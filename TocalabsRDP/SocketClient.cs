@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using WebSocketSharp;
 
 namespace TocalabsRDP
@@ -16,8 +17,7 @@ namespace TocalabsRDP
 
         public SocketClient(string host)
         {
-            wsClient = new WebSocket(host);
-            wsClient.Connect();
+            wsClient = this.Connect(host);
         }
 
         public SocketClient()
@@ -29,6 +29,7 @@ namespace TocalabsRDP
             this.Close();
             wsClient = new WebSocket(host);
             wsClient.Connect();
+            wsClient.OnMessage += this.onMessage;
             return wsClient;
         }
 
@@ -48,6 +49,11 @@ namespace TocalabsRDP
         {
             if (wsClient != null && wsClient.IsAlive)
                 wsClient.Close();
+        }
+
+        private void onMessage(object sender, WebSocketSharp.MessageEventArgs e)
+        {
+
         }
     }
 }
