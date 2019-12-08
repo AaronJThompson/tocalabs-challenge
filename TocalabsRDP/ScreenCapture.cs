@@ -11,6 +11,16 @@ namespace TocalabsRDP
 {
     class ScreenCapture
     {
-        private Rectangle resolution = Screen.PrimaryScreen.Bounds;
+        private Rectangle resolution;
+
+        public ScreenCapture()
+        {
+            this.resolution = Screen.PrimaryScreen.Bounds;
+        }
+
+        public Bitmap Capture()
+        {
+
+        }
     }
 }
