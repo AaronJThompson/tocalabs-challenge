@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing.Imaging;
+using System.Drawing;
 
 namespace TocalabsRDP
 {
@@ -20,7 +21,11 @@ namespace TocalabsRDP
 
         public void StartStream()
         {
-            
+            while(true)
+            {
+                Bitmap cap = screenCapture.Capture();
+                socket.SendImage(cap);
+            }
         }
     }
 }
