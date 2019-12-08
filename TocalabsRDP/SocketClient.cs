@@ -48,6 +48,18 @@ namespace TocalabsRDP
             }
         }
 
+        public void SendImageAsync(Bitmap img, Action<bool> act)
+        {
+            if (wsClient != null && wsClient.IsAlive)
+            {
+                MemoryStream ms = new MemoryStream();
+                img.Save(ms, ImageFormat.Bmp);
+                wsClient.SendAsync(ms.ToArray(), act);
+                ms.Dispose();
+                ms.Close();
+            }
+        }
+
         public void Close()
         {
             if (wsClient != null && wsClient.IsAlive)
