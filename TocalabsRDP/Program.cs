@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.Drawing.Imaging;
+using System.Drawing;
+using System;
 
 namespace TocalabsRDP
 {
