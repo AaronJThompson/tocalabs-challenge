@@ -30,6 +30,7 @@ namespace TocalabsRDP
         public WebSocket Connect(string host)
         {
             this.Close();
+            // Intialize a websocket connection
             wsClient = new WebSocket(host);
             wsClient.Compression = CompressionMethod.Deflate;
             wsClient.Connect();
@@ -41,9 +42,11 @@ namespace TocalabsRDP
         {
             if(wsClient != null && wsClient.IsAlive)
             {
+                // output our bitmap to a memory stream of a jpeg so we can send it as a byte array
                 MemoryStream ms = new MemoryStream();
                 img.Save(ms, ImageFormat.Jpeg);
                 wsClient.Send(ms.ToArray());
+                // Cleanup the memory stream
                 ms.Dispose();
                 ms.Close();
             }
@@ -51,6 +54,7 @@ namespace TocalabsRDP
 
         public void SendImageAsync(Bitmap img, Action<bool> act)
         {
+            //Same as SendImage, but we send it asynchronously and perform a callback action when sent.
             if (wsClient != null && wsClient.IsAlive)
             {
                 MemoryStream ms = new MemoryStream();
@@ -69,7 +73,9 @@ namespace TocalabsRDP
 
         private void onMessage(object sender, WebSocketSharp.MessageEventArgs e)
         {
+            //Assume all messages are input events and deserialize the JSON into a InputEvent object
             InputEvent ie = JsonConvert.DeserializeObject<InputEvent>(e.Data);
+            //Run the converted input event 
             inputControl.RunEvent(ie);
         }
     }
