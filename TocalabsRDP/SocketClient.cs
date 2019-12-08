@@ -42,7 +42,7 @@ namespace TocalabsRDP
             if(wsClient != null && wsClient.IsAlive)
             {
                 MemoryStream ms = new MemoryStream();
-                img.Save(ms, ImageFormat.Bmp);
+                img.Save(ms, ImageFormat.Jpeg);
                 wsClient.Send(ms.ToArray());
                 ms.Dispose();
                 ms.Close();

@@ -67,7 +67,7 @@ namespace TocalabsRDP
 
         public void Toggle()
         {
-            if(thread != null)
+            if(thread == null)
             {
                 Debug.WriteLine("Starting stream");
                 thread = new Thread(StartAsyncStream);
@@ -75,6 +75,14 @@ namespace TocalabsRDP
                 thread.Start();
             }
             else
+            {
+                this.Close();
+            }
+        }
+
+        public void Close()
+        {
+            if (thread != null)
             {
                 running = false;
                 if (thread.Join(500) == false)
