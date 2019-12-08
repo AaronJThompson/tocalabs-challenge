@@ -16,30 +16,37 @@ namespace TocalabsRDP
 
         public SocketClient(string host)
         {
-            this.wsClient = new WebSocket(host);
-            this.wsClient.Connect();
+            wsClient = new WebSocket(host);
+            wsClient.Connect();
         }
 
         public SocketClient()
         {
         }
 
+        public WebSocket Connect(string host)
+        {
+            this.Close();
+            wsClient = new WebSocket(host);
+            wsClient.Connect();
+            return wsClient;
+        }
 
         public void SendImage(Bitmap img)
         {
-            if(this.wsClient != null && this.wsClient.IsAlive)
+            if(wsClient != null && wsClient.IsAlive)
             {
                 MemoryStream ms = new MemoryStream();
                 img.Save(ms, ImageFormat.Bmp);
-                this.wsClient.Send(ms.ToArray());
+                wsClient.Send(ms.ToArray());
                 ms.Close();
             }
         }
 
         public void Close()
         {
-            if (this.wsClient != null && this.wsClient.IsAlive)
-                this.wsClient.Close();
+            if (wsClient != null && wsClient.IsAlive)
+                wsClient.Close();
         }
     }
 }
