@@ -20,7 +20,11 @@ namespace TocalabsRDP
 
         public Bitmap Capture()
         {
+            Bitmap capture = new Bitmap(this.resolution.Width, this.resolution.Height, PixelFormat.Format32bppArgb);
+            Graphics captureGraphics = Graphics.FromImage(capture);
+            captureGraphics.CopyFromScreen(this.resolution.Left, this.resolution.Top, 0, 0, this.resolution.Size);
 
+            return capture;
         }
     }
 }
