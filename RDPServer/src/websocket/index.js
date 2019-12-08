@@ -14,7 +14,7 @@ class RDPController {
     setInterval(this.outputFPS.bind(this), 1000);
     setInterval(() => {
       console.log("Saving last capture...");
-      fs.writeFileSync(__dirname + "../../last_capture.jpg", this.lastImage);
+      fs.writeFileSync(__dirname + "../../../last_capture.jpg", this.lastImage);
     }, 5000)
   }
 
