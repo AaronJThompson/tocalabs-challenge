@@ -65,18 +65,19 @@ namespace TocalabsRDP
             }
         }
 
-        public void Toggle()
+        public Thread Toggle()
         {
             if(thread == null)
             {
                 Debug.WriteLine("Starting stream");
                 thread = new Thread(StartAsyncStream);
-                thread.IsBackground = true;
                 thread.Start();
+                return thread;
             }
             else
             {
                 this.Close();
+                return null;
             }
         }
 

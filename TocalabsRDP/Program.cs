@@ -11,12 +11,12 @@ namespace TocalabsRDP
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            ScreenStreamer streamer = new ScreenStreamer("ws://localhost:8080");
+            streamer.Toggle();
+            var endlessTask = new TaskCompletionSource<bool>().Task;
+            endlessTask.Wait();
         }
     }
 }

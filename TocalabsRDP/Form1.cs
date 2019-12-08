@@ -15,7 +15,6 @@ namespace TocalabsRDP
     public partial class Form1 : Form
     {
         private ScreenStreamer streamer;
-        private Thread streamerThread;
         public Form1()
         {
             InitializeComponent();

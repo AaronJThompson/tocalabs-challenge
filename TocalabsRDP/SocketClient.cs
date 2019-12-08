@@ -31,8 +31,8 @@ namespace TocalabsRDP
         {
             this.Close();
             wsClient = new WebSocket(host);
-            wsClient.Connect();
             wsClient.Compression = CompressionMethod.Deflate;
+            wsClient.Connect();
             wsClient.OnMessage += this.onMessage;
             return wsClient;
         }
