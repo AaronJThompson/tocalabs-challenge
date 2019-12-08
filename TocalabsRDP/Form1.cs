@@ -20,20 +20,17 @@ namespace TocalabsRDP
         {
             InitializeComponent();
             streamer = new ScreenStreamer("ws://localhost:8080");
+            this.FormClosed += ClosedHandler;
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            if(streamerThread == null)
-            {
-                streamerThread = new Thread(new ThreadStart(streamer.StartStream));
-                streamerThread.Start();
-            }
-            else
-            {
-                streamerThread.Abort();
-                streamerThread = null;
-            }
+            streamer.Toggle();
+        }
+
+        protected void ClosedHandler(object sender, EventArgs e)
+        {
+            streamer.Close();
         }
     }
 }
