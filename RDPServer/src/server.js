@@ -8,7 +8,8 @@ wss.on('connection', function connection(ws) {
     console.log(message);
   });
   ws.send(JSON.stringify({
-    EventType: "key",
-    KeyCode: 91
+    EventType: "mouse",
+    DeltaX: 100,
+    DeltaY: 0
   }));
 });
