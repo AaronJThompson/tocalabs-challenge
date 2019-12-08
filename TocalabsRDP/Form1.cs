@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,17 +14,26 @@ namespace TocalabsRDP
 {
     public partial class Form1 : Form
     {
-        private ScreenCapture sc;
+        private ScreenStreamer streamer;
+        private Thread streamerThread;
         public Form1()
         {
             InitializeComponent();
-            this.sc = new ScreenCapture();
+            streamer = new ScreenStreamer("ws://localhost");
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            Bitmap cap = this.sc.Capture();
-           cap.Save(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Capture.jpg", ImageFormat.Jpeg);
+            if(streamerThread != null)
+            {
+                streamerThread = new Thread(new ThreadStart(streamer.StartStream));
+                streamerThread.Start();
+            }
+            else
+            {
+                streamerThread.Abort();
+                streamerThread = null;
+            }
         }
     }
 }
