@@ -20,12 +20,26 @@ namespace TocalabsRDP
             this.wsClient.Connect();
         }
 
+        public SocketClient()
+        {
+        }
+
+
         public void SendImage(Bitmap img)
         {
-            MemoryStream ms = new MemoryStream();
-            img.Save(ms, ImageFormat.Bmp);
-            this.wsClient.Send(ms.ToArray());
-            ms.Close();
+            if(this.wsClient != null && this.wsClient.IsAlive)
+            {
+                MemoryStream ms = new MemoryStream();
+                img.Save(ms, ImageFormat.Bmp);
+                this.wsClient.Send(ms.ToArray());
+                ms.Close();
+            }
+        }
+
+        public void Close()
+        {
+            if (this.wsClient != null && this.wsClient.IsAlive)
+                this.wsClient.Close();
         }
     }
 }
