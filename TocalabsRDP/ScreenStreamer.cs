@@ -16,6 +16,7 @@ namespace TocalabsRDP
         private SocketClient socket;
         private string host;
         private Thread thread;
+        private Bitmap lastCapture;
         private bool running = false;
 
         public ScreenStreamer(string host)
@@ -39,12 +40,37 @@ namespace TocalabsRDP
             Debug.WriteLine("Closing stream thread gracefully");
         }
 
+        public void StartAsyncStream()
+        {
+            socket = new SocketClient(host);
+            running = true;
+            lastCapture = screenCapture.Capture();
+            Action<bool> action = this.NextSend;
+            socket.SendImageAsync(lastCapture, action);
+        }
+
+        private void NextSend(bool success)
+        {
+            if (running)
+            {
+                Action<bool> action = this.NextSend;
+                socket.SendImageAsync(lastCapture, action);
+                lastCapture = screenCapture.Capture();
+            }
+            else
+            {
+                socket.Close();
+                socket = null;
+                Debug.WriteLine("Closing stream thread gracefully");
+            }
+        }
+
         public void Toggle()
         {
             if(thread != null)
             {
                 Debug.WriteLine("Starting stream");
-                thread = new Thread(StartStream);
+                thread = new Thread(StartAsyncStream);
                 thread.IsBackground = true;
                 thread.Start();
             }
