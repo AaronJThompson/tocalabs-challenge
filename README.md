@@ -3,7 +3,9 @@
 ## Description
 This is my submission for the Tocalabs interview challenge.  
 The challenge aims to create an RDP-like server and remote-client, sending screen capture and receiving mouse and keyboard events.
-The server and remote-client are split into two separate programs, with the remote-client written in C# using .Net, and the server written in Node.JS using express with WebSockets.
+The server and remote-client are split into two separate programs, with the remote-client written in C# using .Net, and the server written in Node.JS using express with WebSockets.  
+  
+You can find the projects with their README's and instructions here:
 <br/>
 [RDP Client](/TocalabsRDP)
 <br/>
